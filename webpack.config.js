@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ThreeWebpackPlugin = require('@wildpeaks/three-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const { smart } = require('webpack-merge')
 const { resolve } = require('path')
@@ -10,6 +11,7 @@ const srcDirPath = resolve(__dirname, 'src')
 const distPath = resolve(__dirname, 'dist')
 const templateFilePath = resolve(srcDirPath, 'index.html')
 const entryFilePath = resolve(srcDirPath, 'app.js')
+const entryCssFilePath = resolve(srcDirPath, 'app.css')
 
 const { NODE_ENV, PORT: port, TITLE: title } = process.env
 
@@ -18,7 +20,7 @@ const IS_OPTIMIZED = NODE_ENV !== 'development'
 const base = {
   target: 'web',
 
-  entry: ['@babel/polyfill', entryFilePath],
+  entry: ['@babel/polyfill', entryCssFilePath, entryFilePath],
 
   output: {
     libraryTarget: 'var',
@@ -33,7 +35,7 @@ const base = {
   resolve: {
     extensions: ['.js', '.json'],
 
-    modules: [nodeModulePath]
+    modules: [srcDirPath, nodeModulePath]
   },
 
   module: {
@@ -69,7 +71,20 @@ const base = {
         }
       },
       {
-        test: /\.(jpeg|jpg|mpc|mps|mpb|cxc|cxs|cxb|png|tga)$/,
+        test: /\.css$/,
+
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(png|jpg|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader'
+          }
+        ]
+      },
+      {
+        test: /\.mtl$/,
 
         use: {
           loader: 'mtl-loader'
@@ -84,7 +99,8 @@ const base = {
       filename: 'index.html',
       inject: 'body',
       template: templateFilePath
-    })
+    }),
+    new ThreeWebpackPlugin()
   ]
 }
 
