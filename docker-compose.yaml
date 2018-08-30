@@ -2,7 +2,7 @@ version: "3.1"
 services:
   web:
     build: .
-    container_name: gocWeb
+    container_name: 3dCodingChallengeWeb
     volumes:
       - ./:/app
     ports:
@@ -10,7 +10,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3000
-      - TITLE=Game of life challenge
+      - TITLE=3D coding challenge
     entrypoint:
       - yarn
     command:
