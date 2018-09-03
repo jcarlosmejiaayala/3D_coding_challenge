@@ -4,8 +4,6 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const { smart } = require('webpack-merge')
 const { resolve } = require('path')
 
-require('dotenv').config()
-
 const nodeModulePath = resolve('node_modules')
 const srcDirPath = resolve(__dirname, 'src')
 const distPath = resolve(__dirname, 'dist')
@@ -13,7 +11,11 @@ const templateFilePath = resolve(srcDirPath, 'index.html')
 const entryFilePath = resolve(srcDirPath, 'app.js')
 const entryCssFilePath = resolve(srcDirPath, 'app.css')
 
-const { NODE_ENV, PORT: port, TITLE: title } = process.env
+const {
+  NODE_ENV,
+  PORT: port,
+  TITLE: title = '3d coding challenge'
+} = process.env
 
 const IS_OPTIMIZED = NODE_ENV !== 'development'
 
