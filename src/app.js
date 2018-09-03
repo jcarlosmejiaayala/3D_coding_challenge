@@ -14,6 +14,9 @@ import { OrbitControls } from 'three/examples/js/controls/OrbitControls'
 
 const scene = new Scene()
 
+/*
+* Set the perspective
+*/
 const camera = new PerspectiveCamera(
   1,
   window.innerWidth / window.innerHeight,
@@ -27,11 +30,17 @@ const renderer = new WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
+/*
+* Set the controls to zoom and look around over the bat baseball object
+*/
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
 controls.dampingFactor = 0.25
 controls.enableZoom = true
 
+/*
+* Setup the lighting over the object
+*/
 const keyLight = new DirectionalLight(new Color('hsl(30, 100%, 75%)'), 1.0)
 keyLight.position.set(-100, 0, 100)
 
@@ -45,6 +54,9 @@ scene.add(keyLight)
 scene.add(fillLight)
 scene.add(backLight)
 
+/*
+* This part loads assests to have the object with textures, then add them to it
+*/
 const mtlLoader = new MTLLoader()
 mtlLoader.setTexturePath('/src/assets/')
 mtlLoader.setPath('/src/assets/')
@@ -64,7 +76,10 @@ mtlLoader.load('baseball_bat.mtl', materials => {
   })
 })
 
-const animate = () => {
+/*
+* `animate` will iterate using requestAnimatioFrame built-in function to animate the scene. 
+*/
+export const animate = () => {
   requestAnimationFrame(animate)
   controls.update()
   renderer.render(scene, camera)
