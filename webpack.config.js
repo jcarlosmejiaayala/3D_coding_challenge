@@ -1,3 +1,4 @@
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ThreeWebpackPlugin = require('@wildpeaks/three-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -6,14 +7,15 @@ const { resolve } = require('path')
 
 const nodeModulePath = resolve('node_modules')
 const srcDirPath = resolve(__dirname, 'src')
+const assetsDirPath = resolve(srcDirPath, 'assets')
 const distPath = resolve(__dirname, 'dist')
 const templateFilePath = resolve(srcDirPath, 'index.html')
 const entryFilePath = resolve(srcDirPath, 'app.js')
 const entryCssFilePath = resolve(srcDirPath, 'app.css')
 
 const {
-  NODE_ENV,
-  PORT: port,
+  NODE_ENV = 'development',
+  PORT: port = 3000,
   TITLE: title = '3d coding challenge'
 } = process.env
 
@@ -76,26 +78,12 @@ const base = {
         test: /\.css$/,
 
         use: ['style-loader', 'css-loader']
-      },
-      {
-        test: /\.(png|jpg|gif)$/i,
-        use: [
-          {
-            loader: 'file-loader'
-          }
-        ]
-      },
-      {
-        test: /\.mtl$/,
-
-        use: {
-          loader: 'mtl-loader'
-        }
       }
     ]
   },
 
   plugins: [
+    new CopyWebpackPlugin([{ from: assetsDirPath, to: 'assets' }]),
     new HtmlWebpackPlugin({
       title,
       filename: 'index.html',
