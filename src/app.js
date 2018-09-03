@@ -58,14 +58,14 @@ scene.add(backLight)
 * This part loads assests to have the object with textures, then add them to it
 */
 const mtlLoader = new MTLLoader()
-mtlLoader.setTexturePath('/src/assets/')
-mtlLoader.setPath('/src/assets/')
+mtlLoader.setTexturePath('./assets/')
+mtlLoader.setPath('./assets/')
 mtlLoader.load('baseball_bat.mtl', materials => {
   materials.preload()
 
   const objLoader = new OBJLoader()
   objLoader.setMaterials(materials)
-  objLoader.setPath('/src/assets/')
+  objLoader.setPath('./assets/')
   objLoader.load('baseball_bat.obj', object => {
     const box = new Box3().setFromObject(object)
     const boundingBoxSize = box.max.sub(box.min)

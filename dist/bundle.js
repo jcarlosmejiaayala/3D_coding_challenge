@@ -59759,14 +59759,14 @@ scene.add(backLight);
                       * This part loads assests to have the object with textures, then add them to it
                       */
 var mtlLoader = new three_examples_js_loaders_MTLLoader__WEBPACK_IMPORTED_MODULE_1__["MTLLoader"]();
-mtlLoader.setTexturePath('/src/assets/');
-mtlLoader.setPath('/src/assets/');
+mtlLoader.setTexturePath('./assets/');
+mtlLoader.setPath('./assets/');
 mtlLoader.load('baseball_bat.mtl', function (materials) {
   materials.preload();
 
   var objLoader = new three_examples_js_loaders_OBJLoader__WEBPACK_IMPORTED_MODULE_2__["OBJLoader"]();
   objLoader.setMaterials(materials);
-  objLoader.setPath('/src/assets/');
+  objLoader.setPath('./assets/');
   objLoader.load('baseball_bat.obj', function (object) {
     var box = new three__WEBPACK_IMPORTED_MODULE_0__["Box3"]().setFromObject(object);
     var boundingBoxSize = box.max.sub(box.min);
